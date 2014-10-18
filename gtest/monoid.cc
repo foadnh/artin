@@ -49,6 +49,23 @@ TEST_F(MonoidTest, Operation) {
 	EXPECT_EQ(6, integer_multiplicative_monoid->Op(2, 3));
 }
 
+TEST_F(MonoidTest, CopyConstructor) {
+	artin::monoid<int> new_integer_additive_monoid(*integer_additive_monoid);
+	artin::monoid<int> new_integer_multiplicative_monoid(*integer_multiplicative_monoid);
+	EXPECT_EQ(0, new_integer_additive_monoid.Unit());
+	EXPECT_EQ(1, new_integer_multiplicative_monoid.Unit());
+	EXPECT_EQ(5, new_integer_additive_monoid.Op(2, 3));
+	EXPECT_EQ(6, new_integer_multiplicative_monoid.Op(2, 3));
+}
+
+// If we uncomment assignment operator, we have to uncomment this function.
+/*TEST_F(MonoidTest, Assignement) {
+	artin::monoid<int> assignment(*integer_additive_monoid);
+	assignment = *integer_multiplicative_monoid;
+	EXPECT_EQ(1, assignment.Unit());
+	EXPECT_EQ(6, assignment.Op(2, 3));
+}*/
+
 }  // namespace
 
 int main(int argc, char **argv) {
