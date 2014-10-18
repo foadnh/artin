@@ -42,6 +42,15 @@ namespace artin
     
   public:
     monoid(const binary_operator& func, const value_type& unit):_bin_op(func), _unit(unit){}
+
+	monoid(const monoid<value_type>& other) : _bin_op(other._bin_op), _unit(other._unit) {}
+
+	// Do we need assignment operator or not? If yes, we have to remove const from data members.
+	/*monoid& operator=(const monoid<value_type>& other) {
+		_bin_op = other._bin_op;
+		_unit = other._unit;
+		return *this;
+	}*/
     
     result_type Op(const first_argument_type& lhs, const second_argument_type& rhs) const
     { return _bin_op(lhs, rhs); }
