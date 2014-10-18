@@ -44,15 +44,9 @@ namespace artin
     monoid(const binary_operator& func, const value_type& unit):_bin_op(func), _unit(unit){}
     
     result_type Op(const first_argument_type& lhs, const second_argument_type& rhs) const
-    { return bin_op(lhs, rhs); }
+    { return _bin_op(lhs, rhs); }
     
     const value_type& Unit() { return _unit; }
-  public:
-    typedef typename T value_type;
-
-  private:
-    // associative binary operator
-    const B& binary_operator;
   };
 
 };
