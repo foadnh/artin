@@ -37,8 +37,8 @@ namespace artin
     typedef typename binary_operator::second_argument_type second_argument_type;
     
   private:
-    const binary_operator& _bin_op;
-    const value_type& _unit;
+    const binary_operator _bin_op;
+    const value_type _unit;
     
   public:
     monoid(const binary_operator& func, const value_type& unit):_bin_op(func), _unit(unit){}
