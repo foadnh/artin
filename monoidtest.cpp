@@ -1,5 +1,5 @@
 // main.cpp - some tests for the algebra system.
-// complie with:
+// compile with:
 //   g++-mp-4.7 -o monoidtest monoidtest.cpp -Iinc -std=c++11
 //
 
