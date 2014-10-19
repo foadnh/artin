@@ -36,7 +36,7 @@ namespace artin
       group(const base_type& mon, const unary_operator& invert)
       :base_type(mon), _invert(invert){}
       group(const group& grp)
-      :base_type(grp._monoid), _invert(grp._invert){}
+      :base_type(grp), _invert(grp._invert){}
 
       /* assignment
       group& operator=(const group& grp)
