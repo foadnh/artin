@@ -3,6 +3,9 @@
 //  defined by applying a type to the group class.  The type 
 //  defines the set on which the group operations and definitions 
 //  operate.
+//
+//  See grouptest.cpp for an example construction and constraint.
+//
 #ifndef GROUP_HPP
 #define GROUP_H
 
