@@ -17,30 +17,26 @@
 namespace artin
 {
   template<class T>
-  class group
+  class group : public monoid<T>
   {
     public:
       typedef T value_type;
     
       // group binary function
-      typedef monoid<value_type> monoid_type;
-      typedef typename monoid_type::binary_operator binary_operator;
-      typedef typename monoid_type::result_type result_type;
-      typedef typename monoid_type::first_argument_type first_argument_type;
-      typedef typename monoid_type::second_argument_type second_argument_type;
+      typedef monoid<value_type> base_type;
+      typedef typename base_type::binary_operator binary_operator;
       typedef std::function<value_type(value_type)> unary_operator;
 
     private:
-      monoid_type _monoid;
       unary_operator _invert;
 
     public:
       group(const binary_operator& func, const value_type& unit, const unary_operator& invert)
-      :_monoid(func,unit), _invert(invert) {}
-      group(const monoid_type& mon, const unary_operator& invert)
-      :_monoid(mon), _invert(invert){}
+      :base_type(func,unit), _invert(invert) {}
+      group(const base_type& mon, const unary_operator& invert)
+      :base_type(mon), _invert(invert){}
       group(const group& grp)
-      :_monoid(grp._monoid), _invert(grp._invert){}
+      :base_type(grp._monoid), _invert(grp._invert){}
 
       /* assignment
       group& operator=(const group& grp)
@@ -49,12 +45,6 @@ namespace artin
         _invert = grp._invert;
       }
       */
-
-      result_type Op(const first_argument_type& lhs, const second_argument_type& rhs) const
-      { return _monoid.Op(lhs, rhs); }
-
-      value_type Unit()
-      { return _monoid.Unit(); }
 
       value_type Invert(const value_type& value)
       { return _invert(value); }
