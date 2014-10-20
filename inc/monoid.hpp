@@ -60,18 +60,36 @@ namespace artin
     const value_type& Unit() { return _unit; }
 
 	  friend
-    const bool operator==(const self_type& left, const self_type& right) const {
+    const bool operator==(const self_type& left, const self_type& right) {
       return typeid(left) == typeid(right)  && 
       left._unit == right._unit             && 
-      left._bin_op == right._bin_op;
+      typeid(left._bin_op) == typeid(right._bin_op);
     }
 
     friend
-    const bool operator!=(const self_type& left, const self_type& right) const {
+    const bool operator!=(const self_type& left, const self_type& right) {
       return !(left==right);
     }
 
   };
+/*
+  /// compare operators for monoids of potentially different value_types
+  template<class MONOID1, class MONOID2>
+  bool operator==(const MONOID1& lhs, const MONOID& rhs) const
+  {
+    // compare types
+    if (typeid(MONOID1::value_type) != typeid(MONOID2::value_type))
+    {
+      return false;
+    }
+    return lhs == rhs;
+  }
 
+  template<class MONOID1, class MONOID2>
+  bool operator==(const MONOID1& lhs, const MONOID& rhs) const
+  {
+    return !(lhs == rhs);
+  }
+*/
 };
 #endif //MONOID_HPP

@@ -25,6 +25,7 @@ int main(int agrc, const char** argv)
   static artin::monoid<int> integer_multiplicative_monoid(std::multiplies<int>(), 0);
 
   assert(integer_additive_monoid == integer_additive_monoid2);
+  assert(integer_additive_monoid == integer_multiplicative_monoid);
 
   std::cout << "answer: " << integer_additive_monoid.Op(1, 1) << std::endl;
   std::cout << "answer: " << integer_multiplicative_monoid.Op(1, 1) << std::endl;
