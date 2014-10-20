@@ -11,6 +11,9 @@
 #include "function_composition_monoid.hpp"
 
 
+const bool operator==(const std::function<int(const int&, const int&)>& first, const std::function<int(const int&, const int&)>& second) {
+	return first(3,4) == second(3,4);
+}
 
 int main(int agrc, const char** argv)
 {

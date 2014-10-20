@@ -32,7 +32,6 @@ namespace artin
     typedef T value_type;
     
     // monoid binary function
-    typedef monoid self_type;
     typedef std::function<value_type(const value_type&, const value_type&)> binary_operator;
     typedef typename binary_operator::result_type result_type;
     typedef typename binary_operator::first_argument_type first_argument_type;
@@ -40,51 +39,38 @@ namespace artin
     
   private:
     binary_operator _bin_op;
-    const value_type _unit;
+    value_type _unit;
     
   public:
     monoid(const binary_operator& func, const value_type& unit):_bin_op(func), _unit(unit){}
 
 	monoid(const monoid<value_type>& other) : _bin_op(other._bin_op), _unit(other._unit) {}
 
-	// Do we need assignment operator or not? If yes, we have to remove const from data members.
-	/*monoid& operator=(const monoid<value_type>& other) {
+	monoid& operator=(const monoid<value_type>& other) {
 		_bin_op = other._bin_op;
 		_unit = other._unit;
 		return *this;
-	}*/
+	}
     
     result_type Op(const first_argument_type& lhs, const second_argument_type& rhs) const
     { return _bin_op(lhs, rhs); }
     
     const value_type& Unit() { return _unit; }
 
-
-    bool is_equal(const self_type& other) const
-    {
-      return typeid(self_type) == typeid(other) &&
-      _unit == other._unit                      && 
-      typeid(_bin_op) == typeid(other._bin_op);
-    }
+	// User need to ovload == for binary function if wants to use compare operators
+	// We can get rid of friend and templates, if we don't want to compare 2 different types
+	template<typename T2>
+	friend class artin::monoid;
+	template<typename T2>
+	bool operator==(const monoid<T2>& other) {
+		return typeid(value_type) == typeid(T2) &&
+			(_bin_op == other._bin_op && _unit == other._unit);
+	}
+	template<typename T2>
+	bool operator!=(const monoid<T2>& other) {
+		return !(*this==other);
+	}
 
   };
-
-  /// compare operators for monoids of potentially different value_types
-  template<class MONOID1, class MONOID2>
-  bool operator==(const MONOID1& lhs, const MONOID2& rhs)
-  {
-    // compare types
-    if (typeid(typename MONOID1::value_type) != typeid(typename MONOID2::value_type))
-    {
-      return false;
-    }
-    return lhs.is_equal(rhs);
-  }
-
-  template<class MONOID1, class MONOID2>
-  bool operator!=(const MONOID1& lhs, const MONOID2& rhs)
-  {
-    return !(lhs == rhs);
-  }
-};
+} //namespace artin
 #endif //MONOID_HPP
