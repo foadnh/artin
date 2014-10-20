@@ -5,9 +5,12 @@
 
 #include <iostream>
 #include <functional>
+#include <cassert>
 
 #include "monoid.hpp"
 #include "function_composition_monoid.hpp"
+
+
 
 int main(int agrc, const char** argv)
 {
@@ -17,9 +20,11 @@ int main(int agrc, const char** argv)
   const artin::unary_func<int> gx([](int b){return b*b;});
   auto r = cm.Op(fx, gx)(3);
 
-
   static artin::monoid<int> integer_additive_monoid(std::plus<int>(), 0);
+  static artin::monoid<int> integer_additive_monoid2(std::plus<int>(), 0);
   static artin::monoid<int> integer_multiplicative_monoid(std::multiplies<int>(), 0);
+
+  assert(integer_additive_monoid == integer_additive_monoid2);
 
   std::cout << "answer: " << integer_additive_monoid.Op(1, 1) << std::endl;
   std::cout << "answer: " << integer_multiplicative_monoid.Op(1, 1) << std::endl;

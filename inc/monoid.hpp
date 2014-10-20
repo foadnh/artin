@@ -60,14 +60,14 @@ namespace artin
     const value_type& Unit() { return _unit; }
 
 	  friend
-    const bool operator==(const self_type& left, const self_type& right) {
+    const bool operator==(const self_type& left, const self_type& right) const {
       return typeid(left) == typeid(right)  && 
       left._unit == right._unit             && 
       left._bin_op == right._bin_op;
     }
 
     friend
-    const bool operator!=(const self_type& left, const self_type& right) {
+    const bool operator!=(const self_type& left, const self_type& right) const {
       return !(left==right);
     }
 
