@@ -59,37 +59,32 @@ namespace artin
     
     const value_type& Unit() { return _unit; }
 
-	  friend
-    const bool operator==(const self_type& left, const self_type& right) {
-      return typeid(left) == typeid(right)  && 
-      left._unit == right._unit             && 
-      typeid(left._bin_op) == typeid(right._bin_op);
-    }
 
-    friend
-    const bool operator!=(const self_type& left, const self_type& right) {
-      return !(left==right);
+    bool is_equal(const self_type& other) const
+    {
+      return typeid(self_type) == typeid(other) &&
+      _unit == other._unit                      && 
+      typeid(_bin_op) == typeid(other._bin_op);
     }
 
   };
-/*
+
   /// compare operators for monoids of potentially different value_types
   template<class MONOID1, class MONOID2>
-  bool operator==(const MONOID1& lhs, const MONOID& rhs) const
+  bool operator==(const MONOID1& lhs, const MONOID2& rhs)
   {
     // compare types
-    if (typeid(MONOID1::value_type) != typeid(MONOID2::value_type))
+    if (typeid(typename MONOID1::value_type) != typeid(typename MONOID2::value_type))
     {
       return false;
     }
-    return lhs == rhs;
+    return lhs.is_equal(rhs);
   }
 
   template<class MONOID1, class MONOID2>
-  bool operator==(const MONOID1& lhs, const MONOID& rhs) const
+  bool operator!=(const MONOID1& lhs, const MONOID2& rhs)
   {
     return !(lhs == rhs);
   }
-*/
 };
 #endif //MONOID_HPP
