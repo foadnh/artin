@@ -20,6 +20,7 @@
 #define MONOID_HPP
 
 #include <functional>
+#include <typeinfo>
 
 namespace artin
 {
@@ -37,7 +38,7 @@ namespace artin
     typedef typename binary_operator::second_argument_type second_argument_type;
     
   private:
-    const binary_operator _bin_op;
+    binary_operator _bin_op;
     const value_type _unit;
     
   public:
@@ -56,6 +57,19 @@ namespace artin
     { return _bin_op(lhs, rhs); }
     
     const value_type& Unit() { return _unit; }
+
+	template<typename T2>
+	friend class artin::monoid;
+	template<typename T2>
+	const bool operator==(const monoid<T2>& other) {
+		return typeid(value_type) == typeid(T2) && (_unit == other._unit && _bin_op == other._bin_op);
+	}
+
+	template<typename T2>
+	const bool operator!=(const monoid<T2>& other) {
+		return !(*this==other);
+	}
+
   };
 
 };
