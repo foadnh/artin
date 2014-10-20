@@ -32,6 +32,7 @@ namespace artin
     typedef T value_type;
     
     // monoid binary function
+    typedef monoid self_type;
     typedef std::function<value_type(const value_type&, const value_type&)> binary_operator;
     typedef typename binary_operator::result_type result_type;
     typedef typename binary_operator::first_argument_type first_argument_type;
@@ -58,12 +59,10 @@ namespace artin
     
     const value_type& Unit() { return _unit; }
 
-	template<typename T2>
-	friend class artin::monoid;
-	template<typename T2>
-	const bool operator==(const monoid<T2>& other) {
-		return typeid(value_type) == typeid(T2) && (_unit == other._unit && _bin_op == other._bin_op);
-	}
+	  friend
+    const bool operator==(const self_type& left, const self_type& right) {
+      return typeid(left) == typeid(right) && (left._unit == right._unit && left._bin_op == right._bin_op);
+    }
 
 	template<typename T2>
 	const bool operator!=(const monoid<T2>& other) {
