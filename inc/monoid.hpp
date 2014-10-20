@@ -64,10 +64,10 @@ namespace artin
       return typeid(left) == typeid(right) && (left._unit == right._unit && left._bin_op == right._bin_op);
     }
 
-	template<typename T2>
-	const bool operator!=(const monoid<T2>& other) {
-		return !(*this==other);
-	}
+    friend
+    const bool operator!=(const self_type& left, const self_type& right) {
+      return !(left==right);
+    }
 
   };
 
