@@ -21,7 +21,7 @@ int main(int agrc, const char** argv)
   auto r = cm.Op(fx, gx)(3);
 
   static artin::monoid<int> integer_additive_monoid(std::plus<int>(), 0);
-  static artin::monoid<int> integer_additive_monoid2(std::plus<int>(), 0);
+  static artin::monoid<double> integer_additive_monoid2(std::plus<double>(), 0);
   static artin::monoid<int> integer_multiplicative_monoid(std::multiplies<int>(), 1);
 
   assert(integer_additive_monoid == integer_additive_monoid2);
