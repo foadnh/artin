@@ -63,13 +63,42 @@ TEST_F(GroupTest, CopyConstructor) {
 	EXPECT_EQ(-5, new_integer_additive_group.Invert(5));
 }
 
-// If we uncomment assignment operator, we have to uncomment this function.
-/*TEST_F(GroupTest, Assignement) {
-	artin::group<int> assignment(*integer_additive_group);
-	assignment = *integer_multiplicative_;
-	EXPECT_EQ(1, assignment.Unit());
-	EXPECT_EQ(6, assignment.Op(2, 3));
-}*/
+TEST_F(GroupTest, AssignementOperator) {
+	// Not really a group, but still ok for testing.
+	artin::group<int> assignment(std::multiplies<int>(), 1, std::negate<int>());
+	assignment = *integer_additive_group;
+	EXPECT_EQ(0, assignment.Unit());
+	EXPECT_EQ(5, assignment.Op(2, 3));
+	EXPECT_EQ(-5, assignment.Invert(5));
+}
+
+int plus1(const int& x) {
+	return x + 1;
+}
+const bool operator==(const std::function<int(const int&, const int&)>& first, const std::function<int(const int&, const int&)>& second) {
+	return first(3, 4) == second(3, 4);
+}
+const bool operator==(const std::function<int(const int&)>& first, const std::function<int(const int&)>& second) {
+	return first(6) == second(6);
+}
+TEST_F(GroupTest, EqualToOperator) {
+	artin::monoid<int> integer_additive_monoid(std::plus<int>(), 0), integer_multiplicative_monoid(std::multiplies<int>(), 1);
+	// Not really a group, but still ok for testing.
+	artin::group<int> equal(integer_additive_monoid, std::negate<int>()),
+		  unequal_1(integer_multiplicative_monoid, std::negate<int>()), unequal_2(integer_additive_monoid, plus1);
+	EXPECT_TRUE(*integer_additive_group == equal);
+	EXPECT_FALSE(*integer_additive_group == unequal_1);
+	EXPECT_FALSE(*integer_additive_group == unequal_2);
+}
+
+TEST_F(GroupTest, NotEqualToOperator) {
+	artin::monoid<int> integer_additive_monoid(std::plus<int>(), 0), integer_multiplicative_monoid(std::multiplies<int>(), 1);
+	artin::group<int> equal(integer_additive_monoid, std::negate<int>()),
+		  unequal_1(integer_multiplicative_monoid, std::negate<int>()), unequal_2(integer_additive_monoid, plus1);
+	EXPECT_FALSE(*integer_additive_group != equal);
+	EXPECT_TRUE(*integer_additive_group != unequal_1);
+	EXPECT_TRUE(*integer_additive_group != unequal_2);
+}
 
 }  // namespace
 

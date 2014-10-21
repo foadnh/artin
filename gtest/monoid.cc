@@ -58,20 +58,21 @@ TEST_F(MonoidTest, CopyConstructor) {
 	EXPECT_EQ(6, new_integer_multiplicative_monoid.Op(2, 3));
 }
 
-// If we uncomment assignment operator, we have to uncomment this function.
-/*TEST_F(MonoidTest, Assignement) {
+TEST_F(MonoidTest, AssignementOperator) {
 	artin::monoid<int> assignment(*integer_additive_monoid);
 	assignment = *integer_multiplicative_monoid;
 	EXPECT_EQ(1, assignment.Unit());
 	EXPECT_EQ(6, assignment.Op(2, 3));
-}*/
-
-const bool operator==(const std::function<int(const int&, const int&)>& first, const std::function<int(const int&, const int&)>& second) {
-	return first(3,4) == second(3,4);
 }
+
+// For EqualToOperator and NotEqualToOperator tests
+const bool operator==(const std::function<int(const int&, const int&)>& first, const std::function<int(const int&, const int&)>& second) {
+	return first(3, 4) == second(3, 4);
+}
+
 TEST_F(MonoidTest, EqualToOperator) {
 	artin::monoid<int> equal(std::plus<int>(), 0),
-		unequal_1(std::plus<int>(), 1), unequal_2(std::multiplies<int>(), 0);
+		  unequal_1(std::plus<int>(), 1), unequal_2(std::multiplies<int>(), 0);
 	artin::monoid<double> unequal_3(std::plus<double>(), 0);
 	EXPECT_TRUE(*integer_additive_monoid == equal);
 	EXPECT_FALSE(*integer_additive_monoid == unequal_1);
@@ -81,7 +82,7 @@ TEST_F(MonoidTest, EqualToOperator) {
 
 TEST_F(MonoidTest, NotEqualToOperator) {
 	artin::monoid<int> equal(std::plus<int>(), 0),
-		unequal_1(std::plus<int>(), 1), unequal_2(std::multiplies<int>(), 0);
+		  unequal_1(std::plus<int>(), 1), unequal_2(std::multiplies<int>(), 0);
 	artin::monoid<double> unequal_3(std::plus<double>(), 0);
 	EXPECT_FALSE(*integer_additive_monoid != equal);
 	EXPECT_TRUE(*integer_additive_monoid != unequal_1);

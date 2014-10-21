@@ -38,16 +38,27 @@ namespace artin
       group(const group& grp)
       :base_type(grp), _invert(grp._invert){}
 
-      /* assignment
-      group& operator=(const group& grp)
-      {
-        _moinoid = grp._monoid;
-        _invert = grp._invert;
-      }
-      */
-
       value_type Invert(const value_type& value)
       { return _invert(value); }
+
+      group& operator=(const group& other)
+      {
+		  monoid<value_type>::operator=(other);
+		  _invert = other._invert;
+      }
+
+	// User need to overload == for binary function and ivert function if wants to use compare operators
+	// We can get rid of friend and templates, if we don't want to compare 2 different types
+	template<typename T2>
+	friend class group;
+	template<typename T2>
+	bool operator==(const group<T2>& other) {
+		return base_type::operator==(other) && _invert == other._invert;
+	}
+	template<typename T2>
+	bool operator!=(const group<T2>& other) {
+		return !(*this==other);
+	}
   };
 };
 

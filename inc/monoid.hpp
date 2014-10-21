@@ -57,10 +57,10 @@ namespace artin
     
     const value_type& Unit() { return _unit; }
 
-	// User need to ovload == for binary function if wants to use compare operators
+	// User need to overload == for binary function if wants to use compare operators
 	// We can get rid of friend and templates, if we don't want to compare 2 different types
 	template<typename T2>
-	friend class artin::monoid;
+	friend class monoid;
 	template<typename T2>
 	bool operator==(const monoid<T2>& other) {
 		return typeid(value_type) == typeid(T2) &&
