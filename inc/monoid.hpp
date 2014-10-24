@@ -36,8 +36,8 @@ namespace artin
     typedef typename binary_operator::result_type result_type;
     typedef typename binary_operator::first_argument_type first_argument_type;
     typedef typename binary_operator::second_argument_type second_argument_type;
-    
-  private:
+ 
+  protected:
     binary_operator _bin_op;
     value_type _unit;
     

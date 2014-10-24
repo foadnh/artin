@@ -27,7 +27,7 @@ namespace artin
       typedef typename base_type::binary_operator binary_operator;
       typedef std::function<value_type(value_type)> unary_operator;
 
-    private:
+    protected:
       unary_operator _invert;
 
     public:
@@ -43,7 +43,7 @@ namespace artin
 
       group& operator=(const group& other)
       {
-		  monoid<value_type>::operator=(other);
+		  base_type::operator=(other);
 		  _invert = other._invert;
       }
 

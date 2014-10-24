@@ -72,6 +72,7 @@ TEST_F(GroupTest, AssignementOperator) {
 	EXPECT_EQ(-5, assignment.Invert(5));
 }
 
+// For EqualToOperator and NotEqualToOperator tests
 int plus1(const int& x) {
 	return x + 1;
 }
@@ -81,6 +82,7 @@ const bool operator==(const std::function<int(const int&, const int&)>& first, c
 const bool operator==(const std::function<int(const int&)>& first, const std::function<int(const int&)>& second) {
 	return first(6) == second(6);
 }
+
 TEST_F(GroupTest, EqualToOperator) {
 	artin::monoid<int> integer_additive_monoid(std::plus<int>(), 0), integer_multiplicative_monoid(std::multiplies<int>(), 1);
 	// Not really a group, but still ok for testing.
