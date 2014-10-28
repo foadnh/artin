@@ -71,6 +71,22 @@ namespace artin
 		return !(*this==other);
 	}
 
+	virtual result_type power(const value_type& x, const int& n) const {
+		if (n <= 0)
+			return _unit;
+		value_type result = x;
+		if (n < 31)	{ // This number may not be the best one.
+			for (int i = 1; i < n; i++)
+				result = _bin_op(result, x);
+			return result;
+		}
+		result = power(x, n/2);
+		if (n % 2)
+			return _bin_op(_bin_op(result, result), x);
+		else
+			return _bin_op(result, result);
+	} // Speed: O(lg(n))
+
   };
 } //namespace artin
 #endif //MONOID_HPP

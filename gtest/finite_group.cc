@@ -121,6 +121,12 @@ TEST_F(FiniteGroupTest, GenerateStaticOrder) {
 	EXPECT_EQ(2, s3->order(4));
 }
 
+TEST_F(FiniteGroupTest, Power) {
+	EXPECT_EQ(0, z4->power(2, 650));
+	z4->generate_static_orders();
+	EXPECT_EQ(0, z4->power(2, 650));
+}
+
 }  // namespace
 
 int main(int argc, char **argv) {

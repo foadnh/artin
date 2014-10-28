@@ -59,6 +59,14 @@ namespace artin
 	bool operator!=(const group<T2>& other) {
 		return !(*this==other);
 	}
+
+	virtual value_type power(const value_type& x, const int& n) const {
+		if (n < 0)
+			return base_type::power(_invert(x), -n);
+		else
+			return base_type::power(x, n);
+	} // Speed: O(lg(n))
+
   };
 };
 

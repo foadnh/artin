@@ -102,6 +102,11 @@ TEST_F(GroupTest, NotEqualToOperator) {
 	EXPECT_TRUE(*integer_additive_group != unequal_2);
 }
 
+TEST_F(GroupTest, Power) {
+	EXPECT_EQ(73068, integer_additive_group->power(3, 24356));
+	EXPECT_EQ(-73068, integer_additive_group->power(3, -24356));
+}
+
 }  // namespace
 
 int main(int argc, char **argv) {

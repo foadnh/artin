@@ -104,7 +104,16 @@ public:
 			if (!_orders[i])
 				recursive_calculate_orders(i, i);
 	}
+
+	virtual value_type power(const value_type& x, const int& n) const {
+		if (_orders)
+			return base_type::power(x, n % _orders[x]);
+		else
+			return base_type::power(x, n % _order);
+	} // Speed: if static orders generated: O(min{lg(n), lg(_orders[x])}) else O(min{lg(n), lg(_order)})
+
 };
+
 }; // namespace artin
 
 #endif //FINITE_GROUP_HPP

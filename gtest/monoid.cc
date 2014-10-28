@@ -90,6 +90,13 @@ TEST_F(MonoidTest, NotEqualToOperator) {
 	EXPECT_TRUE(*integer_additive_monoid != unequal_3);
 }
 
+TEST_F(MonoidTest, Power) {
+	EXPECT_EQ(0, integer_additive_monoid->power(3, 0));
+	EXPECT_EQ(3, integer_additive_monoid->power(3, 1));
+	EXPECT_EQ(63, integer_additive_monoid->power(3, 21));
+	EXPECT_EQ(73068, integer_additive_monoid->power(3, 24356));
+}
+
 }  // namespace
 
 int main(int argc, char **argv) {
