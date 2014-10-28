@@ -1,4 +1,4 @@
-#include "../inc/monoid.hpp"
+#include "monoid.h"
 #include "gtest/gtest.h"
 
 namespace {

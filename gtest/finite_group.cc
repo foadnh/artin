@@ -1,4 +1,4 @@
-#include "../inc/finite_group.hpp"
+#include "finite_group.h"
 #include "gtest/gtest.h"
 
 namespace {
@@ -58,7 +58,7 @@ protected:
 	virtual void TearDown() {
 		// Code here will be called immediately after each test (right
 		// before the destructor).
-		delete s3;
+		delete s3, z4;
 	}
 
 	// Objects declared here can be used by all tests in the test case for Foo.

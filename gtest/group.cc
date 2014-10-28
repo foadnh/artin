@@ -1,4 +1,4 @@
-#include "../inc/group.hpp"
+#include "group.h"
 #include "gtest/gtest.h"
 
 namespace {
