@@ -2,14 +2,12 @@
  *
  * There are some problems if we use general set az template T with orders.
  * We should fix it.
- */
+**/
 
 #ifndef FINITE_GROUP_HPP
 #define FINITE_GROUP_HPP
 
 #include "group.hpp"
-#include <cassert>
-#include <iostream>
 
 namespace artin {
 template<typename T = int>
