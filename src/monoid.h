@@ -23,79 +23,44 @@
 #include <typeinfo>
 
 namespace artin {
-template<class T>
-class monoid {
+template<typename T>
+class Monoid {
  public:
-    // various useful typedefs
-    typedef T value_type;
+  // various useful typedefs
+  typedef T ValueType;
 
-    // monoid binary function
-    typedef std::function<value_type(const value_type&, const value_type&)> binary_operator;
-    typedef typename binary_operator::result_type result_type;
-    typedef typename binary_operator::first_argument_type first_argument_type;
-    typedef typename binary_operator::second_argument_type second_argument_type;
+  // Monoid binary function
+  typedef std::function<ValueType(const ValueType&,
+                                  const ValueType&)> BinaryOperator;
+
+  Monoid(const BinaryOperator& bin_op, const ValueType& identity);
+  // Copy constructor
+  explicit Monoid(const Monoid& other);
+
+  virtual ~Monoid();
+
+  virtual Monoid& operator=(const Monoid<ValueType>& other);
+
+  inline ValueType Op(const ValueType& lhs, const ValueType& rhs) const {
+    return bin_op_(lhs, rhs);
+  }
+
+  inline ValueType& identity() {
+    return identity_;
+  }
+
+  // User need to overload == for binary function if wants to use
+  // compare operators.
+  virtual bool operator==(const Monoid& other);
+  virtual bool operator!=(const Monoid& other);
+
+  virtual ValueType Power(const ValueType& x, const int& n) const;
 
  protected:
-    binary_operator _bin_op;
-    value_type _unit;
-
- public:
-    monoid(const binary_operator& func, const value_type& unit)
-        : _bin_op(func), _unit(unit) {}
-
-    monoid(const monoid<value_type>& other)
-        : _bin_op(other._bin_op), _unit(other._unit) {}
-
-    monoid& operator=(const monoid<value_type>& other) {
-        _bin_op = other._bin_op;
-        _unit = other._unit;
-        return *this;
-    }
-
-    result_type Op(const first_argument_type& lhs, const second_argument_type& rhs) const {
-        return _bin_op(lhs, rhs);
-    }
-
-    const value_type& Unit() {
-        return _unit;
-    }
-
-    // User need to overload == for binary function if wants to use compare operators
-    // We can get rid of friend and templates, if we don't want to compare 2 different types
-    template<typename T2>
-    friend class monoid;
-    template<typename T2>
-    bool operator==(const monoid<T2>& other) {
-        return typeid(value_type) == typeid(T2) &&
-               (_bin_op == other._bin_op && _unit == other._unit);
-    }
-    template<typename T2>
-    bool operator!=(const monoid<T2>& other) {
-        return !(*this == other);
-    }
-
-    virtual result_type power(const value_type& x, const int& n) const {
-        if (n <= 0)
-            return _unit;
-
-        value_type result = x;
-
-        if (n < 31) {  // This number may not be the best one.
-            for (int i = 1; i < n; i++)
-                result = _bin_op(result, x);
-
-            return result;
-        }
-
-        result = power(x, n / 2);
-
-        if (n % 2)
-            return _bin_op(_bin_op(result, result), x);
-        else
-            return _bin_op(result, result);
-    }  // Speed: O(lg(n))
+  BinaryOperator bin_op_;
+  ValueType identity_;
 };
 }  // namespace artin
+
+#include "monoid.cc"
 #endif  // ARTIN_MONOID_H_
-
-

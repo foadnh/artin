@@ -1,11 +1,11 @@
-// group.h
-// a template class for defining group objects.  The groups are
-//  defined by applying a type to the group class.  The type
-//  defines the set on which the group operations and definitions
-//  operate.
-//
-//  See grouptest.cpp for an example construction and constraint.
-//
+/* group.h
+ * a template class for defining group objects.  The groups are
+ * defined by applying a type to the group class.  The type
+ * defines the set on which the group operations and definitions
+ * operate.
+ *
+ * See grouptest.cpp for an example construction and constraint.
+ */
 #ifndef ARTIN_GROUP_H_
 #define ARTIN_GROUP_H_
 
@@ -15,56 +15,41 @@
 
 namespace artin {
 template<class T>
-class group : public monoid<T> {
+class Group : public Monoid<T> {
  public:
-    typedef T value_type;
+  typedef T ValueType;
 
-    // group binary function
-    typedef monoid<value_type> base_type;
-    typedef typename base_type::binary_operator binary_operator;
-    typedef std::function<value_type(value_type)> unary_operator;
+  // group binary function
+  typedef Monoid<ValueType> BaseType;
+  typedef typename BaseType::BinaryOperator BinaryOperator;
+  typedef std::function<ValueType(ValueType)> UnaryOperator;
+
+  Group(const BinaryOperator& bin_op, const ValueType& identity,
+        const UnaryOperator& invert);
+  Group(const BaseType& monoid, const UnaryOperator& invert);
+  // Copy constructor
+  explicit Group(const Group& other);
+
+  virtual ~Group();
+
+  inline ValueType Invert(const ValueType& value) {
+    return invert_(value);
+  }
+
+  virtual Group& operator=(const Group& other);
+
+  // User need to overload == for binary function and ivert function
+  // if wants to use compare operators.
+  virtual bool operator==(const Group& other);
+  virtual bool operator!=(const Group& other);
+
+  virtual ValueType Power(const ValueType& x, const int& n) const;
 
  protected:
-    unary_operator _invert;
-
- public:
-    group(const binary_operator& func, const value_type& unit, const unary_operator& invert)
-        : base_type(func, unit), _invert(invert) {}
-    group(const base_type& mon, const unary_operator& invert)
-        : base_type(mon), _invert(invert) {}
-    group(const group& grp)
-        : base_type(grp), _invert(grp._invert) {}
-
-    value_type Invert(const value_type& value) {
-        return _invert(value);
-    }
-
-    group& operator=(const group& other) {
-        base_type::operator=(other);
-        _invert = other._invert;
-    }
-
-    // User need to overload == for binary function and ivert function if wants to use compare operators
-    // We can get rid of friend and templates, if we don't want to compare 2 different types
-    template<typename T2>
-    friend class group;
-    template<typename T2>
-    bool operator==(const group<T2>& other) {
-        return base_type::operator==(other) && _invert == other._invert;
-    }
-    template<typename T2>
-    bool operator!=(const group<T2>& other) {
-        return !(*this == other);
-    }
-
-    virtual value_type power(const value_type& x, const int& n) const {
-        if (n < 0)
-            return base_type::power(_invert(x), -n);
-        else
-            return base_type::power(x, n);
-    }  // Speed: O(lg(n))
+  UnaryOperator invert_;
 };
 };  // namespace artin
 
+#include "group.cc"
 #endif  // ARTIN_GROUP_H_
 
