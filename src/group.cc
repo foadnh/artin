@@ -29,16 +29,6 @@ Group<T>& Group<T>::operator=(const Group& other) {
   return *this;
 }
 
-template<typename T>
-bool Group<T>::operator==(const Group& other) {
-  return BaseType::operator==(other) && invert_ == other.invert_;
-}
-
-template<typename T>
-bool Group<T>::operator!=(const Group& other) {
-  return !(*this == other);
-}
-
 // If n is negetive, we first calculate invert of x, then use parents Power.
 template<typename T>
 T Group<T>::Power(const ValueType& x, const int& n) const {

@@ -40,8 +40,14 @@ class Group : public Monoid<T> {
 
   // User need to overload == for binary function and ivert function
   // if wants to use compare operators.
-  virtual bool operator==(const Group& other);
-  virtual bool operator!=(const Group& other);
+  // These functions need to be inline so can't be virtual to prevent
+  // compiling errors when == is not overloaded for functions.
+  inline bool operator==(const Group& other) const {
+    return BaseType::operator==(other) && invert_ == other.invert_;
+  }
+  inline bool operator!=(const Group& other) const {
+    return !(*this == other);
+  }
 
   virtual ValueType Power(const ValueType& x, const int& n) const;
 
@@ -52,4 +58,3 @@ class Group : public Monoid<T> {
 
 #include "group.cc"
 #endif  // ARTIN_GROUP_H_
-

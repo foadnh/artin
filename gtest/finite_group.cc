@@ -31,19 +31,6 @@ int z4_invert(const int& value) {
   return (4 - (value % 4)) % 4;
 }
 
-// For EqualToOperator and NotEqualToOperator tests
-int plus1(const int& x) {
-  return x + 1;
-}
-const bool operator==(const std::function<int(const int&, const int&)>& first,
-                      const std::function<int(const int&, const int&)>& sec) {
-  return first(3, 4) == sec(3, 4);
-}
-const bool operator==(const std::function<int(const int&)>& first,
-                      const std::function<int(const int&)>& sec) {
-  return first(6) == sec(6);
-}
-
 // The fixture for testing class FiniteGroup.
 class FiniteGroupTest : public ::testing::Test {
  protected:

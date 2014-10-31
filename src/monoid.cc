@@ -23,15 +23,6 @@ Monoid<T>& Monoid<T>::operator=(const Monoid& other) {
   return *this;
 }
 
-template<typename T>
-bool Monoid<T>::operator==(const Monoid& other) {
-  return bin_op_ == other.bin_op_ && identity_ == other.identity_;
-}
-template<typename T>
-bool Monoid<T>::operator!=(const Monoid& other) {
-  return !(*this == other);
-}
-
 // This function products power of x to n recursively. But it compute it
 // straitly for small powers (less or equal to 30).
 // Returns identity for zero or negative numbers.

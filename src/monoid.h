@@ -51,8 +51,14 @@ class Monoid {
 
   // User need to overload == for binary function if wants to use
   // compare operators.
-  virtual bool operator==(const Monoid& other);
-  virtual bool operator!=(const Monoid& other);
+  // These functions need to be inline so can't be virtual to prevent
+  // compiling errors when == is not overloaded for function.
+  inline bool operator==(const Monoid& other) const {
+    return bin_op_ == other.bin_op_ && identity_ == other.identity_;
+  }
+  inline bool operator!=(const Monoid& other) const {
+    return !(*this == other);
+  }
 
   virtual ValueType Power(const ValueType& x, const int& n) const;
 
