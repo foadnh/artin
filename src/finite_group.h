@@ -35,6 +35,8 @@ class FiniteGroup : public Group<T> {
   virtual void GenerateStaticOrders();
 
   virtual ValueType Power(const ValueType& x, const int& n) const;
+  virtual bool IsAbelian() const;
+  virtual bool IsCyclic() const;
 
  protected:
   ValueType order_;

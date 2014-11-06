@@ -113,6 +113,34 @@ T FiniteGroup<T>::Power(const ValueType & x, const int& n) const {
 // Speed: if static orders generated: O(min{lg(n), lg(orders_[x])})
 // else O(min{lg(n), lg(order_)})
 
+// This function checks if all Op(i, j) == Op(j, i) or not.
+template<typename T>
+bool FiniteGroup<T>::IsAbelian() const {
+  for (ValueType i = order_ - 1; i >= 0; i--)
+    for (ValueType j = 0; j < i; j++)
+      if (BaseType::Op(i, j) != BaseType::Op(j, i))
+        return false;
+
+  return true;
+}  // Speed: O(order_^2)
+
+// This function checks if order of an element equals to order_.
+template<typename T>
+bool FiniteGroup<T>::IsCyclic() const {
+  if (orders_) {
+    for (ValueType i = 0; i < order_; i++)
+      if (orders_[i] == order_)
+        return true;
+  } else {
+    for (ValueType i = 0; i < order_; i++)
+      if (order(i) == order_)
+        return true;
+  }
+
+  return false;
+}  // Speed: if static orders generated: O(order_) else: O(order_^3)
+
+/* TODO(Fix it)
 /* TODO(Fix it)
 // Private funtion
 // Used by GenerateStaticOrders

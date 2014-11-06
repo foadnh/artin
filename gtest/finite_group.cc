@@ -127,6 +127,19 @@ TEST_F(FiniteGroupTest, Power) {
   EXPECT_EQ(0, z4->Power(2, 650));
 }
 
+TEST_F(FiniteGroupTest, IsAbelian) {
+  EXPECT_TRUE(z4->IsAbelian());
+  EXPECT_FALSE(s3->IsAbelian());
+}
+
+TEST_F(FiniteGroupTest, IsCyclic) {
+  EXPECT_TRUE(z4->IsCyclic());
+  EXPECT_FALSE(s3->IsCyclic());
+  z4->GenerateStaticOrders();
+  s3->GenerateStaticOrders();
+  EXPECT_TRUE(z4->IsCyclic());
+  EXPECT_FALSE(s3->IsCyclic());
+}
 }  // namespace
 
 int main(int argc, char **argv) {
