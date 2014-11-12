@@ -151,4 +151,4 @@ ValueType FiniteGroup<T>::RecursiveCalculateOrders(ValueType base, ValueType now
 
   return orders_[now];
 }*/
-};  // namespace artin
+}  // namespace artin

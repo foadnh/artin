@@ -28,7 +28,7 @@ int z4_bin_op(const int& lhs, const int& rhs) {
 }
 int z4_identity = 0;
 int z4_invert(const int& value) {
-  return (4 - (value % 4)) % 4;
+  return (4 - value) % 4;
 }
 
 // The fixture for testing class FiniteGroup.

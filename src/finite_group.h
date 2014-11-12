@@ -46,7 +46,7 @@ class FiniteGroup : public Group<T> {
   // Need by GenerateStaticOrders.
   // ValueType RecursiveCalculateOrders(ValueType base, ValueType now);
 };
-};  // namespace artin
+}  // namespace artin
 
 #include "finite_group.cc"
 #endif  // ARTIN_FINITE_GROUP_H_

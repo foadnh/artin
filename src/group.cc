@@ -37,4 +37,4 @@ T Group<T>::Power(const ValueType& x, const int& n) const {
   else
     return BaseType::Power(x, n);
 }  // Speed: O(lg(n))
-};  // namespace artin
+}  // namespace artin

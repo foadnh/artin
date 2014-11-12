@@ -54,7 +54,7 @@ class Group : public Monoid<T> {
  protected:
   UnaryOperator invert_;
 };
-};  // namespace artin
+}  // namespace artin
 
 #include "group.cc"
 #endif  // ARTIN_GROUP_H_
